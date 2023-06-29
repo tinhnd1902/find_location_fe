@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from "axios";
 
 const LocationComponent = () => {
   const [location, setLocation] = useState<any>();
@@ -9,6 +10,7 @@ const LocationComponent = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ lat: latitude, lng: longitude });
+            axios.post(`http://localhost:3003/bot`,{latitude: latitude, longitude: longitude})
         },
         (error) => {
           console.error('Error getting location:', error);
@@ -21,7 +23,6 @@ const LocationComponent = () => {
 
   return (
     <div>
-      <h1>Location:</h1>
       {location ? (
         <p>
           Latitude: {location.lat}, Longitude: {location.lng}
