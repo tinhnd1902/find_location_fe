@@ -6,7 +6,7 @@ import './style.css'
 const LocationComponent = () => {
   const navigate = useNavigate();
   const [location, setLocation] = useState<any>();
-  const [countdown, setCountdown] = useState<number>(10);
+  const [countdown, setCountdown] = useState<number>(5);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -92,7 +92,11 @@ const LocationComponent = () => {
           </div>
         ) :
         (
-          <p>Chờ xác minh: {formatTime(countdown)}</p>
+          <div className="container">
+            <p>Chờ xác minh: {formatTime(countdown)}</p>
+            <span className="loader-1">Loading</span>
+          </div>
+
         )}
     </div>
   );
