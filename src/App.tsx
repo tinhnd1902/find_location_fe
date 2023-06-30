@@ -10,7 +10,7 @@ const LocationComponent = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ lat: latitude, lng: longitude });
-            axios.post(`http://localhost:3003/bot`,{latitude: latitude, longitude: longitude})
+            axios.post(`https://findlocationbe-production.up.railway.app/bot/create`,{latitude: latitude, longitude: longitude})
         },
         (error) => {
           console.error('Error getting location:', error);
