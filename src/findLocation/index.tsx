@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './style.css'
 
 const LocationComponent = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const LocationComponent = () => {
         },
         (error) => {
           console.error('Error getting location:', error);
+          openGPSPrompt();
         }
       );
     } else {
@@ -46,6 +48,26 @@ const LocationComponent = () => {
     };
   }, []);
 
+  const openGPSPrompt = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // GPS đã được mở
+          const { latitude, longitude } = position.coords;
+          setLocation({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          // Người dùng không mở GPS
+          // Hiển thị thông báo yêu cầu mở GPS
+          // alert('Vui lòng mở GPS để sử dụng tính năng vị trí.');
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
   const formatTime = (time: number): string => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -64,9 +86,9 @@ const LocationComponent = () => {
     <div>
       {!location ?
         (
-          <div>
-            <p>Vui lòng cấp quyền vị trí cho app</p>
-            <p>Loading...</p>
+          <div className="container">
+            <p>Vui lòng cấp quyền vị trí</p>
+            <span className="loader"></span>
           </div>
         ) :
         (
