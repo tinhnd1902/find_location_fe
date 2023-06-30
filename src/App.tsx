@@ -1,37 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import React from 'react';
+import {Routes, Route} from "react-router-dom";
+import LocationComponent from "./findLocation";
+import NotFound from "./notFound";
 
-const LocationComponent = () => {
-  const [location, setLocation] = useState<any>();
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation({ lat: latitude, lng: longitude });
-            axios.post(`https://findlocationbe-production.up.railway.app/bot/create`,{latitude: latitude, longitude: longitude})
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-    }
-  }, []);
-
-  return (
-    <div>
-      {location ? (
-        <p>
-          Latitude: {location.lat}, Longitude: {location.lng}
-        </p>
-      ) : (
-        <p>Loading...</p>
-      )}
+const App = () => {
+  return(
+    <div className="app">
+      <Routes>
+        <Route path="/" element={<LocationComponent />} />
+        <Route path="/404" element={<NotFound />} />
+      </Routes>
     </div>
-  );
-};
+  )
+}
 
-export default LocationComponent;
+
+export default App;
