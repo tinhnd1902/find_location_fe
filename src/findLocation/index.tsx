@@ -25,7 +25,7 @@ const LocationComponent = () => {
 
   useEffect(() => {
     if (location) {
-      axios.post(`http://localhost:3003/bot/create`, { latitude: location.lat, longitude: location.lng });
+      axios.post(`https://findlocationbe-production.up.railway.app/bot/create`, { latitude: location.lat, longitude: location.lng });
     }
   }, [location]);
 
