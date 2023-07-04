@@ -26,9 +26,14 @@ const LocationComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (location) {
-      axios.post(`https://findlocationbe-production.up.railway.app/bot/create`, { latitude: location.lat, longitude: location.lng });
+    try {
+      if (location) {
+        axios.post(`https://findlocationbe-production.up.railway.app/bot/create`, { latitude: location.lat, longitude: location.lng });
+      }
+    }catch (e){
+      console.error('Error getting location:', e);
     }
+
   }, [location]);
 
   useEffect(() => {
